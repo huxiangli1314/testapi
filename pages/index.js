@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <div className="container">
       <header>
-        <h1>Next.js + Docker 实时热更新测试v1.2</h1>
+        <h1>Next.js + Docker 实时热更新测试v1.3</h1>
         <p className="subtitle">修改代码后保存，页面会自动刷新</p>
       </header>
 
