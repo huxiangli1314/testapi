@@ -1,0 +1,32 @@
+services:
+  # 开发模式：代码实时热更新
+  app-dev:
+    build:
+      context: .
+      target: dev
+    container_name: nextjs-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./pages:/app/pages          # 挂载页面目录 → 修改即生效
+      - ./public:/app/public        # 挂载静态资源
+      - ./styles:/app/styles        # 挂载样式
+      - ./next.config.js:/app/next.config.js
+    environment:
+      - DOCKER=true
+      - WATCHPACK_POLLING=true       # Windows/WSL 环境下确保文件监听正常
+    profiles:
+      - dev
+
+  # 生产模式
+  app-prod:
+    build:
+      context: .
+      target: prod
+    container_name: nextjs-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - DOCKER=true
+    profiles:
+      - prod
