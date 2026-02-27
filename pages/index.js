@@ -5,6 +5,7 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [apiStatus, setApiStatus] = useState(null);
+  const [envInfo, setEnvInfo] = useState(null);
 
   useEffect(() => {
     fetch('/api/hello')
@@ -12,6 +13,11 @@ export default function Home() {
       .then(data => {
         setMessage(data.message);
         setApiStatus('connected');
+        setEnvInfo({
+          nodeEnv: data.environment,
+          docker: data.docker,
+          time: new Date().toLocaleString('zh-CN'),
+        });
       })
       .catch(() => setApiStatus('error'));
 
@@ -43,7 +49,7 @@ export default function Home() {
   return (
     <div className="container">
       <header>
-        <h1>Next.js + Docker 实时热更新测试</h1>
+        <h1>Next.js + Docker 实时热更新测试v1.2</h1>
         <p className="subtitle">修改代码后保存，页面会自动刷新</p>
       </header>
 
@@ -85,13 +91,17 @@ export default function Home() {
 
       <section className="card info-card">
         <h2>环境信息</h2>
-        <table>
-          <tbody>
-            <tr><td>运行环境</td><td>{process.env.NODE_ENV || 'development'}</td></tr>
-            <tr><td>容器内运行</td><td>{process.env.DOCKER === 'true' ? '是 🐳' : '否'}</td></tr>
-            <tr><td>构建时间</td><td>{new Date().toLocaleString('zh-CN')}</td></tr>
-          </tbody>
-        </table>
+        {envInfo ? (
+          <table>
+            <tbody>
+              <tr><td>运行环境</td><td>{envInfo.nodeEnv}</td></tr>
+              <tr><td>容器内运行</td><td>{envInfo.docker ? '是 🐳' : '否'}</td></tr>
+              <tr><td>检测时间</td><td>{envInfo.time}</td></tr>
+            </tbody>
+          </table>
+        ) : (
+          <p style={{ color: '#aaa' }}>加载中...</p>
+        )}
       </section>
 
       <footer>
