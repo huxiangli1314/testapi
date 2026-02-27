@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <div className="container">
       <header>
-        <h1>Next.js + Docker 实时热更新测试v1.4</h1>
+        <h1>Next.js + Docker 实时热更新测试v1.1.0</h1>
         <p className="subtitle">本次更新通过 Pull Request 提交，支持在 GitHub 上 Revert</p>
       </header>
 
